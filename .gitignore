@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# local env / secrets
+.env
+.env.*
+*.token
+*.pem
+*.key
+secrets.*
+
+# temporary benchmark artifacts
+results/latest/
+results/tmp/
+
+# editor
+.idea/
+.vscode/
