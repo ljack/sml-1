@@ -1,0 +1,50 @@
+Benchmark started: 2026-02-26T20:44:32Z
+API URL: http://127.0.0.1:11434
+Prompt: is abba palindrome?
+Seeds: 11,22,33
+Models: 13
+Start free disk GiB: 60
+
+[phi3:mini] trial=1 seed=11 latency=5s verdict=correct answer="Yes, "abba" is a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads the same"
+[phi3:mini] trial=2 seed=22 latency=2s verdict=correct answer="Yes, "abba" is a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads the same"
+[phi3:mini] trial=3 seed=33 latency=2s verdict=correct answer="Yes, "abba" is a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads the same"
+[tinyllama:latest] trial=1 seed=11 latency=1s verdict=incorrect answer="No, Abba is not a palindrome (word or phrase that reads the same forward and backward). The word "Abba" is a Hebrew name"
+[tinyllama:latest] trial=2 seed=22 latency=0s verdict=incorrect answer="No, Abba is not a palindrome (word or phrase that reads the same forward and backward). The word "Abba" is a Hebrew name"
+[tinyllama:latest] trial=3 seed=33 latency=1s verdict=incorrect answer="No, Abba is not a palindrome (word or phrase that reads the same forward and backward). The word "Abba" is a Hebrew name"
+[granite3.3:2b] trial=1 seed=11 latency=3s verdict=incorrect answer="No, "Abba" is not a palindrome. A palindrome reads the same backward as forward. In this case, "Abba" reads forward as ""
+[granite3.3:2b] trial=2 seed=22 latency=2s verdict=incorrect answer="No, "Abba" is not a palindrome. A palindrome reads the same backward as forward. In this case, "Abba" reads forward as ""
+[granite3.3:2b] trial=3 seed=33 latency=2s verdict=incorrect answer="No, "Abba" is not a palindrome. A palindrome reads the same backward as forward. In this case, "Abba" reads forward as ""
+[gemma2:2b] trial=1 seed=11 latency=3s verdict=incorrect answer="No, "ABBA" is not a palindrome. Here's why: * **Palindrome:** A palindrome reads the same backward as it does forward (e"
+[gemma2:2b] trial=2 seed=22 latency=1s verdict=incorrect answer="No, "ABBA" is not a palindrome. Here's why: * **Palindrome:** A palindrome reads the same backward as it does forward (e"
+[gemma2:2b] trial=3 seed=33 latency=2s verdict=incorrect answer="No, "ABBA" is not a palindrome. Here's why: * **Palindrome:** A palindrome reads the same backward as it does forward (e"
+[qwen2.5:1.5b] trial=1 seed=11 latency=2s verdict=correct answer="Yes, "ABBA" is a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads the same"
+[qwen2.5:1.5b] trial=2 seed=22 latency=0s verdict=correct answer="Yes, "ABBA" is a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads the same"
+[qwen2.5:1.5b] trial=3 seed=33 latency=1s verdict=correct answer="Yes, "ABBA" is a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads the same"
+[qwen2.5:0.5b] trial=1 seed=11 latency=2s verdict=correct answer="Yes, "ABBA" is indeed a palindrome. A palindrome reads the same forwards and backwards. In this case, "ABBA" can be read"
+[qwen2.5:0.5b] trial=2 seed=22 latency=0s verdict=correct answer="Yes, "ABBA" is indeed a palindrome. A palindrome reads the same forwards and backwards. In this case, "ABBA" can be read"
+[qwen2.5:0.5b] trial=3 seed=33 latency=0s verdict=correct answer="Yes, "ABBA" is indeed a palindrome. A palindrome reads the same forwards and backwards. In this case, "ABBA" can be read"
+[llama3.2:3b] trial=1 seed=11 latency=3s verdict=incorrect answer="No, "ABBA" is not a palindrome. A palindrome must read the same backward as forward. In this case, when you reverse the "
+[llama3.2:3b] trial=2 seed=22 latency=2s verdict=incorrect answer="No, "ABBA" is not a palindrome. A palindrome must read the same backward as forward. In this case, when you reverse the "
+[llama3.2:3b] trial=3 seed=33 latency=1s verdict=incorrect answer="No, "ABBA" is not a palindrome. A palindrome must read the same backward as forward. In this case, when you reverse the "
+[llama3.2:1b] trial=1 seed=11 latency=2s verdict=correct answer="Yes, "ABBA" is a palindrome. It reads the same way forward and backward, which is a characteristic of palindromes."
+[llama3.2:1b] trial=2 seed=22 latency=0s verdict=correct answer="Yes, "ABBA" is a palindrome. It reads the same way forward and backward, which is a characteristic of palindromes."
+[llama3.2:1b] trial=3 seed=33 latency=1s verdict=correct answer="Yes, "ABBA" is a palindrome. It reads the same way forward and backward, which is a characteristic of palindromes."
+[smollm2:1.7b] trial=1 seed=11 latency=3s verdict=correct answer="Yes, "Abba" is indeed a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads t"
+[smollm2:1.7b] trial=2 seed=22 latency=2s verdict=correct answer="Yes, "Abba" is indeed a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads t"
+[smollm2:1.7b] trial=3 seed=33 latency=1s verdict=correct answer="Yes, "Abba" is indeed a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads t"
+[smollm2:360m] trial=1 seed=11 latency=1s verdict=incorrect answer="No, Abba is not a palindrome. A palindrome is a word or phrase that reads the same forward and backward."
+[smollm2:360m] trial=2 seed=22 latency=0s verdict=incorrect answer="No, Abba is not a palindrome. A palindrome is a word or phrase that reads the same forward and backward."
+[smollm2:360m] trial=3 seed=33 latency=0s verdict=incorrect answer="No, Abba is not a palindrome. A palindrome is a word or phrase that reads the same forward and backward."
+[smollm2:135m] trial=1 seed=11 latency=1s verdict=incorrect answer="The answer to this question is yes. The word "ababa" is not an example of a palindromic word or phrase in the English la"
+[smollm2:135m] trial=2 seed=22 latency=1s verdict=incorrect answer="The answer to this question is yes. The word "ababa" is not an example of a palindromic word or phrase in the English la"
+[smollm2:135m] trial=3 seed=33 latency=1s verdict=incorrect answer="The answer to this question is yes. The word "ababa" is not an example of a palindromic word or phrase in the English la"
+[qwen3:8b] trial=1 seed=11 latency=28s verdict=correct answer="Yes, "abba" is a palindrome. A palindrome is a word, phrase, or sequence that reads the same backward as forward. Breaki"
+[qwen3:8b] trial=2 seed=22 latency=25s verdict=correct answer="Yes, "abba" is a palindrome. A palindrome is a word, phrase, or sequence that reads the same backward as forward. Breaki"
+[qwen3:8b] trial=3 seed=33 latency=25s verdict=correct answer="Yes, "abba" is a palindrome. A palindrome is a word, phrase, or sequence that reads the same backward as forward. Breaki"
+[qwen2.5:3b] trial=1 seed=11 latency=4s verdict=incorrect answer="No, "ABBA" is not a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads the s"
+[qwen2.5:3b] trial=2 seed=22 latency=2s verdict=incorrect answer="No, "ABBA" is not a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads the s"
+[qwen2.5:3b] trial=3 seed=33 latency=2s verdict=incorrect answer="No, "ABBA" is not a palindrome. A palindrome is a word, phrase, number, or other sequence of characters that reads the s"
+
+Benchmark finished: 2026-02-26T20:46:48Z
+End free disk GiB: 59
+Output directory: docs/results/2026-02-26T20-44-32Z

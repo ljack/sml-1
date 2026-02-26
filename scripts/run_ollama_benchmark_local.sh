@@ -201,6 +201,21 @@ jq -s '
 END_EPOCH="$(date +%s)"
 END_DISK_GIB="$(free_gib)"
 
+# Extract all model statistics straight from the API tags and pair them with model names
+# This jq script loops through .models array and converts it to an object like
+# {"phi3:mini": {"size": ..., "parameter_size": ...}}
+MODEL_STATS_JSON="$(printf '%s' "$TAGS_JSON" | jq -c '
+  reduce .models[] as $m (
+    {};
+    .[$m.name] = {
+      size: $m.size,
+      parameter_size: ($m.details.parameter_size // "unknown"),
+      quantization_level: ($m.details.quantization_level // "unknown"),
+      family: ($m.details.family // "unknown")
+    }
+  )
+')"
+
 jq -nc \
   --arg api_url "$API_URL" \
   --arg prompt "$PROMPT" \
@@ -228,8 +243,9 @@ jq -nc \
       raw_jsonl:$raw_jsonl,
       summary_json:$summary_json,
       summary_md:$summary_md
-    }
-  }' >"$METADATA_JSON"
+    },
+    model_stats: $model_stats
+  }' --argjson model_stats "$MODEL_STATS_JSON" >"$METADATA_JSON"
 
 {
   echo

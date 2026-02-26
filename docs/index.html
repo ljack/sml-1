@@ -137,21 +137,87 @@
                 </div>
             </section>
 
+            <section class="model-details-section" id="model-details-container" style="display: none;">
+                <h2>Model Configuration & Hardware Specs</h2>
+                <div class="model-table-container">
+                    <table class="model-table" id="model-details-table">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>File Size (GB)</th>
+                                <th>Parameters</th>
+                                <th>Quantization</th>
+                                <th>Family</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populated dynamically by dashboard.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
             <section class="repro-section">
-                <h2>Reproducibility</h2>
-                <p>Run locally:</p>
-                <div class="code-block">
-                    <pre><code>bash scripts/run_ollama_benchmark_local.sh</code></pre>
+                <h2>Reproducibility & Security Commands</h2>
+                
+                <div class="script-card">
+                    <h3>run_ollama_benchmark_local.sh</h3>
+                    <p class="script-purpose">Orchestrates a deterministic multi-model benchmark against a local Ollama instance.</p>
+                    <div class="code-block">
+                        <pre><code>bash scripts/run_ollama_benchmark_local.sh</code></pre>
+                    </div>
+                    <ul class="script-details">
+                        <li><strong>Deterministic Validation:</strong> Freezes generation by setting <code>temperature=0</code> and enforcing specific seeds.</li>
+                        <li><strong>JSONL Telemetry:</strong> Records granular per-trial telemetry, latency, and answer parsing strictly as JSON Lines arrays.</li>
+                        <li><strong>Hardware Telemetry:</strong> Extracts and bundles model API tags (size, quantization, parameter size) into <code>metadata.json</code>.</li>
+                    </ul>
                 </div>
 
-                <p>Optional disk-safe pulls:</p>
-                <div class="code-block">
-                    <pre><code>bash scripts/pull_models_disk_safe.sh</code></pre>
+                <div class="script-card">
+                    <h3>pull_models_disk_safe.sh</h3>
+                    <p class="script-purpose">Automates parallel pulling of Ollama models while ensuring the machine does not run out of disk space.</p>
+                    <div class="code-block">
+                        <pre><code>bash scripts/pull_models_disk_safe.sh</code></pre>
+                    </div>
+                    <ul class="script-details">
+                        <li><strong>Safety Floor Checks:</strong> Calculates available disk space before every pull and halts if a <code>55 GiB</code> floor is reached.</li>
+                        <li><strong>Fast-path Existing:</strong> Queries Ollama's local tags endpoint to skip re-downloading existing models, saving bandwidth.</li>
+                    </ul>
                 </div>
 
-                <p>Secret hygiene check before push:</p>
-                <div class="code-block">
-                    <pre><code>bash scripts/secret_scan.sh</code></pre>
+                <div class="script-card">
+                    <h3>secret_scan.sh</h3>
+                    <p class="script-purpose">Scans the repository for accidentally committed secrets (API keys, private keys) before allowing a push to GitHub.</p>
+                    <div class="code-block">
+                        <pre><code>bash scripts/secret_scan.sh</code></pre>
+                    </div>
+                    <ul class="script-details">
+                        <li><strong>High-Speed Scanning:</strong> Uses <code>ripgrep (rg)</code> to scan the entire codebase concurrently.</li>
+                        <li><strong>Detected Patterns:</strong> UpCloud API tokens, AWS Access Key IDs, GitHub PATs, Slack tokens, and Private Key headers (RSA, EC, OPENSSH).</li>
+                    </ul>
+                </div>
+
+                <div class="script-card">
+                    <h3>create-upcloud-token-current-ip.sh</h3>
+                    <p class="script-purpose">Creates a temporary, strictly scoped UpCloud API token restricted to the public IP of the execution machine.</p>
+                    <div class="code-block">
+                        <pre><code>./create-upcloud-token-current-ip.sh --name ci-token --expires-in 4h</code></pre>
+                    </div>
+                    <ul class="script-details">
+                        <li><strong>Zero-Trust Configuration:</strong> Automatically identifies the local machine's IPv4 and IPv6 public addresses.</li>
+                        <li><strong>IP Allowlisting:</strong> Appends exact CIDRs (<code>/32</code> for IPv4, <code>/128</code> for IPv6) to the API token scope mapping.</li>
+                    </ul>
+                </div>
+
+                <div class="script-card">
+                    <h3>update_dashboard_dropdown.sh</h3>
+                    <p class="script-purpose">Scans the local results directory and dynamically updates this HTML page's <code>&lt;select&gt;</code> dropdown.</p>
+                    <div class="code-block">
+                        <pre><code>bash scripts/update_dashboard_dropdown.sh</code></pre>
+                    </div>
+                    <ul class="script-details">
+                        <li><strong>Idempotent Updates:</strong> Uses `awk` to cleanly inject new `<option>` HTML tags corresponding to detected historical runs without malforming the DOM.</li>
+                    </ul>
                 </div>
             </section>
         </main>

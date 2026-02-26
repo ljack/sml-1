@@ -1,0 +1,119 @@
+[
+  {
+    "model": "gemma2:2b",
+    "trials": 3,
+    "correct": 0,
+    "incorrect": 3,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 2
+  },
+  {
+    "model": "granite3.3:2b",
+    "trials": 3,
+    "correct": 0,
+    "incorrect": 3,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 2.3333333333333335
+  },
+  {
+    "model": "llama3.2:1b",
+    "trials": 3,
+    "correct": 3,
+    "incorrect": 0,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 1
+  },
+  {
+    "model": "llama3.2:3b",
+    "trials": 3,
+    "correct": 0,
+    "incorrect": 3,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 2
+  },
+  {
+    "model": "phi3:mini",
+    "trials": 3,
+    "correct": 3,
+    "incorrect": 0,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 3
+  },
+  {
+    "model": "qwen2.5:0.5b",
+    "trials": 3,
+    "correct": 3,
+    "incorrect": 0,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 0.6666666666666666
+  },
+  {
+    "model": "qwen2.5:1.5b",
+    "trials": 3,
+    "correct": 3,
+    "incorrect": 0,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 1
+  },
+  {
+    "model": "qwen2.5:3b",
+    "trials": 3,
+    "correct": 0,
+    "incorrect": 3,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 2.6666666666666665
+  },
+  {
+    "model": "qwen3:8b",
+    "trials": 3,
+    "correct": 3,
+    "incorrect": 0,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 26
+  },
+  {
+    "model": "smollm2:1.7b",
+    "trials": 3,
+    "correct": 3,
+    "incorrect": 0,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 2
+  },
+  {
+    "model": "smollm2:135m",
+    "trials": 3,
+    "correct": 0,
+    "incorrect": 3,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 1
+  },
+  {
+    "model": "smollm2:360m",
+    "trials": 3,
+    "correct": 0,
+    "incorrect": 3,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 0.3333333333333333
+  },
+  {
+    "model": "tinyllama:latest",
+    "trials": 3,
+    "correct": 0,
+    "incorrect": 3,
+    "unclear": 0,
+    "errors": 0,
+    "avg_latency_sec": 0.6666666666666666
+  }
+]
