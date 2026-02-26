@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
+# ==============================================================================
+# Script: run_ollama_benchmark_local.sh
+# Purpose: Orchestrates a multi-model, multi-seed deterministic benchmark against
+#          a local Ollama instance. It queries models with a specific prompt,
+#          measures latency, evaluates the correctness of the answer via regex,
+#          and compiles raw traces and aggregate summaries into a results folder.
+# ==============================================================================
+
+# Fail on error, undefined vars, or pipeline failures.
 set -euo pipefail
+
+# Configuration defaults that can be overridden via environment variables.
 
 API_URL="${API_URL:-http://127.0.0.1:11434}"
 PROMPT="${PROMPT:-is abba palindrome?}"
@@ -8,6 +19,7 @@ OUT_DIR="${OUT_DIR:-results/$(date -u +%Y-%m-%dT%H-%M-%SZ)}"
 INCLUDE_CLOUD_MODELS="${INCLUDE_CLOUD_MODELS:-0}"
 REQUEST_TIMEOUT_SEC="${REQUEST_TIMEOUT_SEC:-900}"
 
+# Helper to check for required CLI tools
 require_cmd() {
   if ! command -v "$1" >/dev/null 2>&1; then
     echo "Missing required command: $1" >&2
@@ -15,31 +27,41 @@ require_cmd() {
   fi
 }
 
+# Ensure jq (JSON parsing) and rg (ripgrep, for fast regex) are available.
 require_cmd curl
 require_cmd jq
 require_cmd rg
 require_cmd awk
 
+# Create the unique output directory for this benchmark run.
 mkdir -p "$OUT_DIR"
 
+# Calculates free disk space in GiB to monitor disk health during tests.
 free_gib() {
   df -k ~ | awk 'NR==2 {printf "%d", $4/1024/1024}'
 }
 
+# classify_verdict()
+# Evaluates the LLM's response to determine if it correctly identified a palindrome.
+# Uses ripgrep (rg) to scan the lowercase output for specific keywords.
 classify_verdict() {
   local text="$1"
   local lower
   lower="$(printf '%s' "$text" | tr '[:upper:]' '[:lower:]')"
 
+  # Look for "not a palindrome" or "no" to classify as incorrect.
   if printf '%s' "$lower" | rg -q '\bnot (a )?palindrome\b|\bno[, ]'; then
     printf 'incorrect'
+  # Look for "yes" or "is a palindrome" to classify as correct.
   elif printf '%s' "$lower" | rg -q '\byes\b|\bis (indeed )?a palindrome\b'; then
     printf 'correct'
+  # Fallback if the LLM hallucinated heavily or was ambiguous.
   else
     printf 'unclear'
   fi
 }
 
+# Parse the comma-separated seeds string into a bash array.
 IFS=',' read -r -a SEEDS <<<"$SEEDS_CSV"
 
 TAGS_JSON="$(curl -sS "$API_URL/api/tags")"
@@ -48,12 +70,15 @@ if ! printf '%s' "$TAGS_JSON" | jq -e '.models' >/dev/null 2>&1; then
   exit 1
 fi
 
+# Determine which models to benchmark
 MODELS=()
 if [[ "$INCLUDE_CLOUD_MODELS" == "1" ]]; then
+  # Include all models from the API
   while IFS= read -r line; do
     MODELS+=("$line")
   done < <(printf '%s' "$TAGS_JSON" | jq -r '.models[].name')
 else
+  # Filter out models ending in ':cloud' (e.g. OpenAI/Anthropic proxies in Ollama)
   while IFS= read -r line; do
     MODELS+=("$line")
   done < <(printf '%s' "$TAGS_JSON" | jq -r '.models[].name' | rg -v ':cloud$')
@@ -86,17 +111,24 @@ printf '%s\n' "${MODELS[@]}" >"$MODELS_TXT"
   echo
 } >"$RUN_LOG"
 
+# ------------------------------------------------------------------------------
+# Main Benchmark Loop
+# ------------------------------------------------------------------------------
+# Iterate over every model, and for each model, iterate over every seed.
 for model in "${MODELS[@]}"; do
   trial=1
   for seed in "${SEEDS[@]}"; do
     start="$(date +%s)"
 
+    # Build the JSON payload to send to Ollama.
+    # We pass temperature 0 and the specific seed for maximum determinism.
     payload="$(jq -nc \
       --arg model "$model" \
       --arg prompt "$PROMPT" \
       --argjson seed "$seed" \
       '{model:$model,prompt:$prompt,stream:false,options:{temperature:0,seed:$seed}}')"
 
+    # Execute the LLM completion request.
     resp="$(curl -sS --max-time "$REQUEST_TIMEOUT_SEC" \
       -H 'Content-Type: application/json' \
       -d "$payload" \
@@ -113,6 +145,8 @@ for model in "${MODELS[@]}"; do
       verdict="$(classify_verdict "$answer")"
     fi
 
+    # Append the raw data for this specific trial as a JSONL (JSON Lines) object.
+    # This allows downstream tools/dashboards to parse exact traces.
     jq -nc \
       --arg model "$model" \
       --argjson trial "$trial" \
@@ -138,6 +172,11 @@ for model in "${MODELS[@]}"; do
   done
 done
 
+# ------------------------------------------------------------------------------
+# Aggregation & Reporting
+# ------------------------------------------------------------------------------
+# Use jq to read the entire raw.jsonl file, group trials by model,
+# and calculate the total correct, incorrect, and average latency.
 jq -s '
   group_by(.model) |
   map({
@@ -152,6 +191,7 @@ jq -s '
   sort_by(.model)
 ' "$RAW_JSONL" >"$SUMMARY_JSON"
 
+# Convert the summary JSON into a readable Markdown table.
 {
   echo "| model | correct/trials | incorrect | unclear | errors | avg_latency_sec |"
   echo "|---|---:|---:|---:|---:|---:|"

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SML Ollama Benchmark Evidence</title>
+        <meta
+            name="description"
+            content="Local-only benchmark evidence for Small Language Models (SML) using Ollama."
+        >
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        >
+        <link rel="stylesheet" href="assets/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>SML Ollama Benchmark Evidence</h1>
+            <p class="subtitle">
+                This page summarizes local-only benchmark evidence for the
+                prompt: <br /><code>is abba palindrome?</code>
+            </p>
+        </header>
+
+        <main>
+            <section class="scope-section">
+                <h2>Scope</h2>
+                <ul>
+                    <li>
+                        Inference endpoint: <code>http://127.0.0.1:11434</code>
+                    </li>
+                    <li>
+                        Cloud-tagged models excluded (e.g., <code
+                        >*:cloud</code>)
+                    </li>
+                    <li>
+                        Deterministic settings: <code>temperature=0</code>,
+                        seeds <code>11, 22, 33</code>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="results-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="margin-bottom: 0;">Main Results</h2>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <label for="dataset-select" style="color: var(--text-secondary); font-size: 0.9rem;">Select Run:</label>
+                        <select id="dataset-select" class="premium-select">
+                            <option value="2026-02-26T21-00-00Z">2026-02-26 21-00-00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3>Accuracy (Correct vs Incorrect)</h3>
+                        <canvas id="accuracyChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Average Latency (Seconds)</h3>
+                        <canvas id="latencyChart"></canvas>
+                    </div>
+                </div>
+
+                <h3
+                    style="margin-top: 3rem; margin-bottom: 1rem; font-size: 1.1rem; color: #fff"
+                >
+                    Raw Data Links:
+                </h3>
+
+                <div class="links-grid">
+                    <a
+                        href="../results/2026-02-26-deterministic-3trials.md"
+                        class="link-card"
+                    >
+                        <span class="title">Deterministic 3 Trials</span>
+                        <span class="desc"
+                        >Results from the 3 fixed seeds test runs.</span>
+                    </a>
+                    <a
+                        href="../results/2026-02-26-single-run-comparison.md"
+                        class="link-card"
+                    >
+                        <span class="title">Single Run Comparison</span>
+                        <span class="desc"
+                        >Baseline comparison across different models.</span>
+                    </a>
+                    <a
+                        href="../results/2026-02-26-secret-scan.md"
+                        class="link-card"
+                    >
+                        <span class="title">Secret Scan</span>
+                        <span class="desc"
+                        >Evidence of credential hygiene checks.</span>
+                    </a>
+                </div>
+
+                <h3
+                    style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem; color: #fff"
+                >
+                    Machine-Generated Bundle:
+                </h3>
+                <div class="links-grid">
+                    <a
+                        href="../results/2026-02-26T21-00-00Z/summary.md"
+                        class="link-card"
+                    >
+                        <span class="title">Summary</span>
+                        <span class="desc"
+                        >High-level test metrics and outcomes.</span>
+                    </a>
+                    <a
+                        href="../results/2026-02-26T21-00-00Z/metadata.json"
+                        class="link-card"
+                    >
+                        <span class="title">Metadata JSON</span>
+                        <span class="desc"
+                        >System state and configuration.</span>
+                    </a>
+                    <a
+                        href="../results/2026-02-26T21-00-00Z/raw.jsonl"
+                        class="link-card"
+                    >
+                        <span class="title">Raw Data</span>
+                        <span class="desc"
+                        >Line-separated raw LLM output traces.</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="repro-section">
+                <h2>Reproducibility</h2>
+                <p>Run locally:</p>
+                <div class="code-block">
+                    <pre><code>bash scripts/run_ollama_benchmark_local.sh</code></pre>
+                </div>
+
+                <p>Optional disk-safe pulls:</p>
+                <div class="code-block">
+                    <pre><code>bash scripts/pull_models_disk_safe.sh</code></pre>
+                </div>
+
+                <p>Secret hygiene check before push:</p>
+                <div class="code-block">
+                    <pre><code>bash scripts/secret_scan.sh</code></pre>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>SML Ollama Benchmark Kit &bull; Local First Inference</p>
+        </footer>
+        <script src="assets/dashboard.js"></script>
+    </body>
+</html>
