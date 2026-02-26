@@ -39,7 +39,7 @@ echo
 # --glob: explictly EXCLUDE the .git folder and the generated JSONL result files 
 #         (because benchmark traces might randomly hallucinate things that look like keys).
 # -e "$PATTERN": evaluate the regex.
-if rg -n --hidden --glob '!.git/*' --glob '!results/*.jsonl' --glob '!results/*/raw.jsonl' -e "$PATTERN" "$ROOT_DIR"; then
+if rg -n --hidden --glob '!.git/*' --glob '!docs/results/*.jsonl' --glob '!docs/results/*/raw.jsonl' -e "$PATTERN" "$ROOT_DIR"; then
   echo
   # If rg returns true (exit code 0), it FOUND a match. 
   # We halt and exit with code 2 to signal a failure (secrets leaked!).

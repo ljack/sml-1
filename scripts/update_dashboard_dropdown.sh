@@ -8,7 +8,7 @@
 
 set -euo pipefail
 
-RESULTS_DIR="results"
+RESULTS_DIR="docs/results"
 DOCS_HTML="docs/index.html"
 
 # Find all JSON metadata files and extract timestamps

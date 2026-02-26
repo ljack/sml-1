@@ -3,6 +3,7 @@
 Local-only benchmark kit for testing small language models (SML) with Ollama.
 
 This repository focuses on:
+
 - reproducible local inference tests
 - disk-safe model pulls
 - publishable evidence files under `results/`
@@ -31,13 +32,15 @@ bash scripts/secret_scan.sh
 ## Key Files
 
 - `scripts/run_ollama_benchmark_local.sh` deterministic multi-trial benchmark
-- `scripts/pull_models_disk_safe.sh` bounded model pull loop with free-disk floor
+- `scripts/pull_models_disk_safe.sh` bounded model pull loop with free-disk
+  floor
 - `scripts/secret_scan.sh` credential leak scanner
-- `results/` benchmark evidence and summaries
+- `docs/results/` benchmark evidence and summaries
 - `docs/index.md` GitHub Pages-friendly summary page
 
 ## Safety Notes
 
 - Never hardcode tokens in files.
-- Use env vars for credentials (for example `UPCLOUD_TOKEN`) and rotate tokens if exposed.
+- Use env vars for credentials (for example `UPCLOUD_TOKEN`) and rotate tokens
+  if exposed.
 - Run `scripts/secret_scan.sh` before every push.

@@ -15,7 +15,7 @@ set -euo pipefail
 API_URL="${API_URL:-http://127.0.0.1:11434}"
 PROMPT="${PROMPT:-is abba palindrome?}"
 SEEDS_CSV="${SEEDS_CSV:-11,22,33}"
-OUT_DIR="${OUT_DIR:-results/$(date -u +%Y-%m-%dT%H-%M-%SZ)}"
+OUT_DIR="${OUT_DIR:-docs/results/$(date -u +%Y-%m-%dT%H-%M-%SZ)}"
 INCLUDE_CLOUD_MODELS="${INCLUDE_CLOUD_MODELS:-0}"
 REQUEST_TIMEOUT_SEC="${REQUEST_TIMEOUT_SEC:-900}"
 
