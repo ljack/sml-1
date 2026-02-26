@@ -9,7 +9,7 @@
 set -euo pipefail
 
 # Define the directory to scan. Defaults to the current directory (.).
-
+ROOT_DIR="${1:-.}"
 require_cmd() {
   if ! command -v "$1" >/dev/null 2>&1; then
     echo "Missing required command: $1" >&2
